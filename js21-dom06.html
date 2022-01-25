@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        p{
+            border: 1px solid red
+        }
+        
+        fieldset{
+            border-color: powderblue
+        }
+    </style>
+
+    <script>
+        function addAppend(){
+            var fieldset = document.getElementById("addele")
+            var p = document.createElement("p")
+
+            p.textContent = "자식 태그들 중 가장 마지막에 넣어진다."  // textContent : 공백또한 모두 다 가져옴 vs innerText : 불필요한 공백 제거 후 텍스트 반환
+
+            fieldset.appendChild(p)  
+            // appendChild : DOM 메서드이므로 생성되어있는 요소만 추가 가능. 추가 노드 갯수도 1개로 제한됨  (javascript 함수인 append와 다름)
+            //               이미 태그(노드)를 만들고 태그를 추가할 때 사용함. 추가된 요소는 맨 뒤에 위치
+        }
+
+        var count = 1
+
+        function addInsert(){
+            var newP = document.createElement("p")
+            var fieldset = document.getElementById("addele")
+
+            newP.textContent = "엘리먼트의 앞에 넣어진다 " + (count++)
+
+            var oldDiv = document.querySelector("fieldset > div")
+            fieldset.insertBefore(newP, oldDiv)  // 기준점 (newP) 앞에 뒤의 것 (oldDiv)을 넣어라
+
+        }
+
+        function moveElement(){
+            var moveEle = document.querySelector("fieldset").children[1]  // legend 다음의 p
+            var addEle = document.body
+            addEle.appendChild(moveEle)  // body 의 child가 됨. (**이동됨) --- 즉 body 의 fieldset 과 동급으로 
+            
+            /*
+
+            - childNodes : 현재 요소의 자식 노드가 포함된 NodeList 반환. 요소 노드뿐만 아니라 주석 노드와 같은 비 요소 노드 또한 포함!
+                vs
+            - children : 현재 요소의 자식 요소가 포함된 HTMLCollection을 반환. 비 요소 노드는 모두 제외!
+            
+            */
+        }
+
+    </script>
+
+</head>
+<body>
+
+    <h1>태그 추가하기</h1>
+
+    <button onclick="addAppend()">appendChild()</button>
+    <button onclick="addInsert()">insertBefore()</button>
+    <button onclick="moveElement()">element 이동</button>
+
+    <fieldset id="addele">
+        <legend>부모태그</legend>
+        <div>div</div>
+    </fieldset>
+
+</body>
+</html>
